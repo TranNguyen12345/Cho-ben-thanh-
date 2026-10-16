@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chợ Bến Thành - Biểu Tượng Lịch Sử & Kiến Trúc Sài Gòn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Roboto', sans-serif; }
+        .map-box { height: 300px; width: 100%; }
+    </style>
+</head>
+<body class="bg-[#FFFBF0] text-[#1A202C] min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-[#9B2C2C] text-white shadow-md py-4 px-6">
+        <div class="max-w-4xl mx-auto flex items-center space-x-3">
+            <i class="fa-solid fa-store text-2xl text-[#D69E2E]"></i>
+            <h1 class="text-xl font-bold">Chợ Bến Thành</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-1 space-y-6 w-full">
+        <!-- Image Banner -->
+        <div class="relative h-72 md:h-96 rounded-2xl overflow-hidden shadow-lg">
+            <img src="cho-ben-thanh.jpg" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1200&q=80'">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent flex items-end p-6">
+                <div>
+                    <span class="px-3 py-1 bg-[#9B2C2C] text-white text-xs font-semibold rounded-full uppercase">Biểu tượng Kiến trúc & Thương mại</span>
+                    <h1 class="text-2xl md:text-4xl font-bold text-white mt-2">Chợ Bến Thành</h1>
+                    <p class="text-gray-200 text-sm mt-1"><i class="fa-solid fa-location-dot text-[#D69E2E] mr-2"></i>Đường Lê Lợi, Phường Bến Thành, Quận 1</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Audio Section -->
+        <div class="bg-[#9B2C2C] text-white p-5 rounded-xl shadow flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-headphones text-2xl text-[#D69E2E]"></i>
+                <div><h4 class="font-bold">Thuyết Minh Audio</h4><p class="text-xs text-red-200">Nghe giới thiệu về lịch sử và kiến trúc chợ Bến Thành</p></div>
+            </div>
+            <div class="flex space-x-2">
+                <button onclick="speakText('Chợ Bến Thành được hãng thầu Pháp Brossard et Maupin khởi công xây dựng từ năm 1912 và hoàn thành vào năm 1914 trên nền đầm Boresse dưới thời Thị trưởng François Nouet. Chợ có diện tích hơn 13.000 mét vuông với hệ thống 4 cửa chính và 12 cửa phụ. Điểm nhấn nổi bật nhất là tòa tháp đồng hồ ba mặt ở cửa Nam cùng các bức phù điêu gốm Biên Hòa độc đáo, mang đậm dấu ấn giao thương sầm uất bậc nhất Sài Gòn.')" class="px-4 py-2 bg-[#D69E2E] text-[#1A202C] font-bold rounded-lg text-sm hover:bg-yellow-400 transition"><i class="fa-solid fa-play mr-1"></i> Phát</button>
+                <button onclick="stopSpeech()" class="px-4 py-2 bg-white/20 rounded-lg text-sm hover:bg-white/30 transition"><i class="fa-solid fa-stop mr-1"></i> Dừng</button>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div class="bg-white p-6 rounded-xl shadow-sm space-y-6">
+            <h3 class="font-bold text-xl text-[#9B2C2C] border-b pb-2">Giới Thiệu Chi Tiết</h3>
+            
+            <p class="text-gray-700 leading-relaxed">
+                Chợ Bến Thành không chỉ là một trung tâm giao thương sầm uất mà còn là biểu tượng văn hóa, kiến trúc lâu đời gắn liền với nhịp sống của người dân Thành phố Hồ Chí Minh qua hơn một thế kỷ.
+            </p>
+
+            <!-- Section 1 -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-gray-900 text-lg flex items-center">
+                    <i class="fa-solid fa-building text-[#9B2C2C] mr-2"></i> 1. Kiến trúc & Cấu trúc
+                </h4>
+                <p class="text-gray-700 leading-relaxed">
+                    Chợ Bến Thành được thiết kế theo lối kiến trúc lồng chợ kiên cố với tổng diện tích khoảng 13.056 m². Toàn bộ ngôi chợ được phân chia một cách khoa học nhờ hệ thống <strong>4 cửa chính và 12 cửa phụ</strong> mở ra bốn hướng:
+                </p>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2 leading-relaxed">
+                    <li><strong>Cửa Nam (cổng chính):</strong> Nhìn ra bùng binh Quách Thị Trang.</li>
+                    <li><strong>Cửa Bắc:</strong> Hướng về đường Lê Thánh Tôn.</li>
+                    <li><strong>Cửa Đông:</strong> Nằm trên đường Phan Bội Châu.</li>
+                    <li><strong>Cửa Tây:</strong> Giáp đường Phan Chu Trinh.</li>
+                </ul>
+                <p class="text-gray-700 leading-relaxed">
+                    Mặt bằng bên trong được quy hoạch thành các khu vực sạp hàng thông thoáng, giúp tối ưu hóa không gian di chuyển cho du khách và giao thương của tiểu thương.
+                </p>
+            </div>
+
+            <!-- Section 2 -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-gray-900 text-lg flex items-center">
+                    <i class="fa-solid fa-history text-[#9B2C2C] mr-2"></i> 2. Lịch sử hình thành & Người tạo ra
+                </h4>
+                <p class="text-gray-700 leading-relaxed">
+                    Ngôi chợ do hãng thầu Pháp <strong>Brossard et Maupin</strong> khởi công xây dựng từ năm 1912 và hoàn thành vào năm 1914. Trước đó, dự án xây dựng lại chợ tại vị trí đầm Boresse (nền đất hiện tại) được phê duyệt bởi Thị trưởng thành phố Sài Gòn lúc bấy giờ là ông <strong>François Nouet</strong>.
+                </p>
+                <p class="text-gray-700 leading-relaxed">
+                    Việc chọn lựa nhà thầu Brossard et Maupin – một công ty xây dựng nổi tiếng thời Pháp thuộc – đã mang lại cho chợ Bến Thành một kết cấu bê tông cốt thép vững chắc cùng diện mạo kiến trúc kết hợp hài hòa giữa kỹ thuật phương Tây và đặc trưng bản địa.
+                </p>
+            </div>
+
+            <!-- Section 3 -->
+            <div class="space-y-3">
+                <h4 class="font-bold text-gray-900 text-lg flex items-center">
+                    <i class="fa-solid fa-star text-[#9B2C2C] mr-2"></i> 3. Đặc trưng nổi bật
+                </h4>
+                <ul class="list-disc pl-5 text-gray-700 space-y-2 leading-relaxed">
+                    <li><strong>Tháp đồng hồ biểu tượng:</strong> Điểm nhấn mang tính biểu tượng của chợ Bến Thành là tòa tháp đồng hồ ba mặt cao vút ngự trị ngay tại mặt tiền cửa Nam.</li>
+                    <li><strong>Phù điêu gốm Biên Hòa:</strong> Ngay phía dưới tháp đồng hồ và các lối vào, bạn sẽ ấn tượng với những bức phù điêu bằng gốm Biên Hòa khắc họa hình ảnh các sản vật quen thuộc của miền Nam như con bò, con cá đuối, nải chuối...</li>
+                    <li><strong>Ẩm thực & Chợ đêm:</strong> Khu ẩm thực phong phú trong lồng chợ với hàng trăm món ăn đặc sản Nam Bộ và khu phố chợ đêm sầm uất bao quanh chính là nét đặc trưng thu hút hàng triệu du khách trong và ngoài nước mỗi năm.</li>
+                </ul>
+            </div>
+
+            <!-- Map -->
+            <div class="pt-4 border-t">
+                <h4 class="font-bold text-gray-800 mb-3"><i class="fa-solid fa-map-location-dot text-[#9B2C2C] mr-2"></i> Vị Trí Bản Đồ:</h4>
+                <div id="map" class="map-box rounded-lg border"></div>
+                <a href="https://www.google.com/maps/search/?api=1&query=10.7721,106.6983" target="_blank" class="block text-center py-2.5 bg-red-800 text-white font-bold rounded-lg hover:bg-red-900 transition text-sm mt-3">Mở Chỉ Đường Trên Google Maps</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-[#1A202C] text-gray-400 py-6 text-center text-xs">
+        <p>© 2026 Trang Thông Tin Di Tích Lịch Sử TP.HCM</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([10.7721, 106.6983], 16);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.marker([10.7721, 106.6983]).addTo(map).bindPopup('<b>Chợ Bến Thành</b>').openPopup();
+
+        let synth = window.speechSynthesis;
+        let utterance = null;
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            synth.cancel();
+            utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'vi-VN';
+            utterance.rate = 0.9;
+            synth.speak(utterance);
+        }
+        function stopSpeech() {
+            if (synth && (synth.speaking || synth.pending)) synth.cancel();
+        }
+    </script>
+</body>
+</html>
